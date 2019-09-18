@@ -1,3 +1,14 @@
+#idea
+.idea/*
+
+# images
+training_data/*
+demon.png
+demon2.png
+human.png
+spirit.png
+not_card_1.png
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
