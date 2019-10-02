@@ -1,13 +1,16 @@
 import cv2
 import numpy as np
 
+#CANNY_THRESH_1 = 100
+#CANNY_THRESH_2 = 600  Finder kun creature tag text
+
 #== Parameters =======================================================================
 BLUR = 21
-CANNY_THRESH_1 = 10
+CANNY_THRESH_1 = 100
 CANNY_THRESH_2 = 200
 MASK_DILATE_ITER = 10
 MASK_ERODE_ITER = 10
-MASK_COLOR = (0.0,0.0,1.0) # In BGR format
+MASK_COLOR = (0.0,0.0,0.0) # In BGR format
 
 
 #== Processing =======================================================================
@@ -57,4 +60,4 @@ masked = (masked * 255).astype('uint8')                     # Convert back to 8-
 cv2.imshow('img', masked)                                   # Display
 cv2.waitKey()
 
-#cv2.imwrite('C:/Temp/person-masked.jpg', masked)           # Save
+cv2.imwrite('C:\Images\sorte_kanter.jpg', masked)           # Save

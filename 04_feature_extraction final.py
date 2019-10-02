@@ -13,40 +13,29 @@ def add_images_with_labels(image_path, label_number):
         images.append(image_array)
         labels.append(formatted_card_labels[label_number])
     return
-dir_name = "training_data"
+dir_name = "training_creature_color"
 
 # Path to folders with training data
-not_cards = Path(dir_name) / "Not_card"
-#angel = Path(dir_name) / "Angel"
-demon = Path(dir_name) / "Demon"
-#goblin = Path(dir_name) / "Goblin"
-human = Path(dir_name) / "Human"
-#merfolk = Path(dir_name) / "Merfolk"
-spirit = Path(dir_name) / "Spirit"
-#zombie = Path(dir_name) / "Zombie"
-
+#black_cards = Path(dir_name) / "black_Cards"
+#blue_cards = Path(dir_name) / "blue_Cards"
+blue = Path(dir_name) / "blue"
+#green_cards = Path(dir_name) / "green_Cards"
+red = Path(dir_name) / "red"
+#red_cards = Path(dir_name) / "red_Cards"
+green = Path(dir_name) / "green"
 images = []
 card_labels = [
-    0, 1, 2, 3,
+    0, 1, 2
 ]
 
-formatted_card_labels = keras.utils.to_categorical(card_labels, 4)
+formatted_card_labels = keras.utils.to_categorical(card_labels, 3)
 print(formatted_card_labels)
 
 
 labels = []
-# Load all the not-card images
-
-add_images_with_labels(not_cards, 0)
-add_images_with_labels(demon, 1)
-add_images_with_labels(human, 2)
-add_images_with_labels(spirit, 3)
-
-#add_images_with_labels(angel, 1)
-#add_images_with_labels(goblin, 3)
-#add_images_with_labels(merfolk, 5)
-
-#add_images_with_labels(zombie, 7)
+add_images_with_labels(blue, 0)
+add_images_with_labels(red, 1)
+add_images_with_labels(green, 2)
 
 # Create a single numpy array with all the images we loaded
 x_train = np.array(images)
