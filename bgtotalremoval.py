@@ -1,0 +1,126 @@
+from pathlib import Path
+
+import cv2
+import numpy as np
+from PIL import Image, ImageChops
+
+#Various paths
+bgPath = "bg_cards/"
+testPath = "test_creature_color/"
+trainPath = "training_creature_color/"
+realTrainPath = "real_training_cards/"
+
+#Card Color Categories
+clrRed = "red/"
+clrBlue = "blue/"
+clrGreen = "green/"
+clrBlack = "black/"
+clrWhite = "white/"
+clrYellow = "yellow/"
+clrORed = "ored/"
+clrOBlue = "oblue/"
+clrOGreen = "ogreen/"
+clrOBlack = "oblack/"
+clrOWhite = "owhite/"
+clrLess = "colorless/"
+#colors = [clrGreen, clrBlack, clrBlue, clrRed, clrWhite, clrOBlack, clrOBlue, clrOGreen, clrORed, clrOWhite, clrLess]
+#colors = [clrYellow]
+colors = [clrBlack]
+#colors = [clrWhite]
+#colors = [clrGreen]
+
+
+def bgBlackener(path):
+    # CANNY_THRESH_1 = 100
+    # CANNY_THRESH_2 = 600  Finder kun creature tag text
+
+    # == Parameters =======================================================================
+    BLUR = 21
+    CANNY_THRESH_1 = 10
+    CANNY_THRESH_2 = 30
+    MASK_DILATE_ITER = 10
+    MASK_ERODE_ITER = 10
+    MASK_COLOR = (0.0, 0.0, 0.0)  # In BGR format  GBR
+
+    # == Processing =======================================================================
+
+    # -- Read image -----------------------------------------------------------------------
+    img = cv2.imread(path)
+    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+
+    # -- Edge detection -------------------------------------------------------------------
+    edges = cv2.Canny(gray, CANNY_THRESH_1, CANNY_THRESH_2)
+    edges = cv2.dilate(edges, None)
+    edges = cv2.erode(edges, None)
+
+    # -- Find contours in edges, sort by area ---------------------------------------------
+    contour_info = []
+    contours, _ = cv2.findContours(edges, cv2.RETR_LIST, cv2.CHAIN_APPROX_NONE)
+    # Previously, for a previous version of cv2, this line was:
+    #  contours, _ = cv2.findContours(edges, cv2.RETR_LIST, cv2.CHAIN_APPROX_NONE)
+    # Thanks to notes from commenters, I've updated the code but left this note
+    for c in contours:
+        contour_info.append((
+            c,
+            cv2.isContourConvex(c),
+            cv2.contourArea(c),
+        ))
+    contour_info = sorted(contour_info, key=lambda c: c[2], reverse=True)
+    max_contour = contour_info[0]
+
+    # -- Create empty mask, draw filled polygon on it corresponding to largest contour ----
+    # Mask is black, polygon is white
+    mask = np.zeros(edges.shape)
+    cv2.fillConvexPoly(mask, max_contour[0], (255))
+
+    # -- Smooth mask, then blur it --------------------------------------------------------
+    mask = cv2.dilate(mask, None, iterations=MASK_DILATE_ITER)
+    mask = cv2.erode(mask, None, iterations=MASK_ERODE_ITER)
+    mask = cv2.GaussianBlur(mask, (BLUR, BLUR), 0)
+    mask_stack = np.dstack([mask] * 3)  # Create 3-channel alpha mask
+
+    # -- Blend masked img into MASK_COLOR background --------------------------------------
+    mask_stack = mask_stack.astype('float32') / 255.0  # Use float matrices,
+    img = img.astype('float32') / 255.0  # for easy blending
+
+    masked = (mask_stack * img) + ((1 - mask_stack) * MASK_COLOR)  # Blend
+    masked = (masked * 255).astype('uint8')  # Convert back to 8-bit
+
+    # cv2.imshow('img', masked)                                   # Display
+    cv2.waitKey()
+
+    cv2.imwrite(path, masked)  # Save
+
+
+###Black Background Removal###
+def BlackBGRemover(src, dest):
+    def trim(im):
+        bg = Image.new(im.mode, im.size, im.getpixel((0, 0)))
+        diff = ImageChops.difference(im, bg)
+        diff = ImageChops.add(diff, diff, 2.0, -100)
+        bbox = diff.getbbox()
+        if bbox:
+            return im.crop(bbox)
+
+    im = Image.open(src)
+    im = trim(im)
+    im2 = im.resize((224, 224), Image.BICUBIC)
+    # im.show()
+    #print(im)
+    im2.save(dest, "png")
+    print(dest)
+
+
+def fileIterator(path, color, savedest):
+    location = Path(path + color)
+    for img in location.glob("*.jpg"):
+        bgBlackener(str(img))
+        BlackBGRemover(str(img), savedest + color + img.name)
+
+
+def folderIterator(path, cArray, savedest):
+    for x in cArray:
+        fileIterator(path, x, savedest)
+
+
+folderIterator(testPath, colors, testPath)

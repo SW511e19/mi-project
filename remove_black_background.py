@@ -9,8 +9,8 @@ def trim(im):
     if bbox:
         return im.crop(bbox)
 
-im = Image.open("C:\Images\creature_tag.png")
+im = Image.open("test_creature_color/green/test_2_nobg.jpg")
 im = trim(im)
 im.show()
 print(im)
-cv2.imwrite("002.png", im)
+im.save("test_creature_color/green/test_2_noblackbg.jpg", "png")

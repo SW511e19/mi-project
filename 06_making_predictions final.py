@@ -5,14 +5,22 @@ import numpy as np
 from keras.applications import vgg16
 
 class_label_names = [
-    "not a card",
 #    "angels",
-    "demons",
+    "blue",
  #   "goblin",
-    "human",
+    "red",
  #   "merfolk",
-    "spirits",
+    "green",
   #  "zombie"
+    "black",
+    "white",
+    "yellow",
+    "oblue",
+    "ored",
+    "ogreen",
+    "oblack",
+    "owhite",
+    "colorless"
 ]
 
 # Load the json file that contains the model's structure
@@ -26,7 +34,7 @@ model = model_from_json(model_structure)
 model.load_weights("model_weights.h5")
 
 # Load an image file to test, resizing it to 64x64 pixels (as required by this model)
-img = image.load_img("not_card_1.png", target_size=(224, 224))
+img = image.load_img("test_creature_color/black/noble.jpg", target_size=(224, 224))
 
 # Convert the image to a numpy array
 image_array = image.img_to_array(img)

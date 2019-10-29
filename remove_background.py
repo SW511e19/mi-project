@@ -6,8 +6,8 @@ import numpy as np
 
 #== Parameters =======================================================================
 BLUR = 21
-CANNY_THRESH_1 = 100
-CANNY_THRESH_2 = 200
+CANNY_THRESH_1 = 10
+CANNY_THRESH_2 = 100
 MASK_DILATE_ITER = 10
 MASK_ERODE_ITER = 10
 MASK_COLOR = (0.0,0.0,0.0) # In BGR format
@@ -16,7 +16,7 @@ MASK_COLOR = (0.0,0.0,0.0) # In BGR format
 #== Processing =======================================================================
 
 #-- Read image -----------------------------------------------------------------------
-img = cv2.imread('card_blank_BG2.png')
+img = cv2.imread('bg_cards/green/test_3.jpg')
 gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
 #-- Edge detection -------------------------------------------------------------------
@@ -60,4 +60,4 @@ masked = (masked * 255).astype('uint8')                     # Convert back to 8-
 cv2.imshow('img', masked)                                   # Display
 cv2.waitKey()
 
-cv2.imwrite('C:\Images\sorte_kanter.jpg', masked)           # Save
+#cv2.imwrite('test_creature_color/green/test_2_nobg.jpg', masked)           # Save
