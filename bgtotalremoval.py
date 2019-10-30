@@ -113,7 +113,7 @@ def BlackBGRemover(src, dest):
 
 def fileIterator(path, color, savedest):
     location = Path(path + color)
-    for img in location.glob("*.jpeg"):
+    for img in location.glob("*.png"):
         bgBlackener(str(img))
         BlackBGRemover(str(img), savedest + color + img.name)
 
