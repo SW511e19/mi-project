@@ -6,18 +6,18 @@ from keras.preprocessing import image
 from keras.applications import vgg16
 
 def add_images_with_labels(image_path, label_number):
-    for img in image_path.glob("*.jpg"):
+    for img in image_path.glob("*.png"):
         img = image.load_img(img)
         image_array = image.img_to_array(img)
 
         images.append(image_array)
         labels.append(formatted_card_labels[label_number])
     return
-dir_name = "real_training_cards"
+dir_name = "test_creature_color"
 
 # Path to folders with training data
-card = Path(dir) / "card"
-nocard = Path(dir) / "nocard"
+card = Path(dir_name) / "cards"
+nocard = Path(dir_name) / "not_cards"
 images = []
 card_labels = [
     0, 1

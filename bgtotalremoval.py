@@ -23,11 +23,11 @@ clrOGreen = "ogreen/"
 clrOBlack = "oblack/"
 clrOWhite = "owhite/"
 clrLess = "colorless/"
+test = "test/"
+cards = "cards/"
+notcards = "not_cards/"
 #colors = [clrGreen, clrBlack, clrBlue, clrRed, clrWhite, clrOBlack, clrOBlue, clrOGreen, clrORed, clrOWhite, clrLess]
-#colors = [clrYellow]
-colors = [clrBlack]
-#colors = [clrWhite]
-#colors = [clrGreen]
+colors = [cards, notcards]
 
 
 def bgBlackener(path):
@@ -36,8 +36,8 @@ def bgBlackener(path):
 
     # == Parameters =======================================================================
     BLUR = 21
-    CANNY_THRESH_1 = 10
-    CANNY_THRESH_2 = 30
+    CANNY_THRESH_1 = 30
+    CANNY_THRESH_2 = 40
     MASK_DILATE_ITER = 10
     MASK_ERODE_ITER = 10
     MASK_COLOR = (0.0, 0.0, 0.0)  # In BGR format  GBR
@@ -113,7 +113,7 @@ def BlackBGRemover(src, dest):
 
 def fileIterator(path, color, savedest):
     location = Path(path + color)
-    for img in location.glob("*.jpg"):
+    for img in location.glob("*.jpeg"):
         bgBlackener(str(img))
         BlackBGRemover(str(img), savedest + color + img.name)
 

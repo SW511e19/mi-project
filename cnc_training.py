@@ -13,11 +13,11 @@ model = Sequential()
 model.add(Flatten(input_shape=x_train.shape[1:]))
 model.add(Dense(512, activation='relu'))
 model.add(Dropout(0.5))
-model.add(Dense(2, activation='softmax'))
+model.add(Dense(2, activation='sigmoid'))
 
 # Compile the model  HUSK AT
 model.compile(
-    loss="categorical_crossentropy",
+    loss="binary_crossentropy",
     optimizer="adam",
     metrics=['accuracy']
 )
