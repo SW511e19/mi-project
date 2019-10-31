@@ -6,51 +6,44 @@ from keras.preprocessing import image
 from keras.applications import vgg16
 
 def add_images_with_labels(image_path, label_number):
-    for img in image_path.glob("*.jpg"):
+    for img in image_path.glob("*.png"):
         img = image.load_img(img)
         image_array = image.img_to_array(img)
 
         images.append(image_array)
         labels.append(formatted_card_labels[label_number])
     return
-dir_name = "real_training_cards"
+dir_name = "test_creature_color"
 
 # Path to folders with training data
-blue = Path(dir_name) / "blue"
-red = Path(dir_name) / "red"
-green = Path(dir_name) / "green"
-black = Path(dir_name) / "black"
-white = Path(dir_name) / "white"
-yellow = Path(dir_name) / "yellow"
-oblue = Path(dir_name) / "oblue"
-ored = Path(dir_name) / "ored"
-ogreen = Path(dir_name) / "ogreen"
-oblack = Path(dir_name) / "oblack"
-owhite = Path(dir_name) / "owhite"
-colorless = Path(dir_name) / "colorless"
+blue = Path(dir_name) / "new_blue"
+red = Path(dir_name) / "new_red"
+green = Path(dir_name) / "new_green"
+black = Path(dir_name) / "new_black"
+white = Path(dir_name) / "new_white"
+multi = Path(dir_name) / "new_multicolour"
+oblue = Path(dir_name) / "old_blue"
+ored = Path(dir_name) / "old_red"
+ogreen = Path(dir_name) / "old_green"
+oblack = Path(dir_name) / "old_black"
+owhite = Path(dir_name) / "old_white"
+omulti = Path(dir_name) / "old_multicolour"
+colorless = Path(dir_name) / "colourless"
 images = []
 card_labels = [
-    0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11
+    0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12
 ]
 
-formatted_card_labels = keras.utils.to_categorical(card_labels, 12)
-print(formatted_card_labels)
+categories = [blue, red, green, black, white, multi, oblue, ored, ogreen, oblack, owhite, omulti, colorless]
+formatted_card_labels = keras.utils.to_categorical(card_labels, len(card_labels))
 
 
 labels = []
-add_images_with_labels(blue, 0)
-add_images_with_labels(red, 1)
-add_images_with_labels(green, 2)
-add_images_with_labels(black, 3)
-add_images_with_labels(white, 4)
-add_images_with_labels(yellow, 5)
-add_images_with_labels(oblue, 6)
-add_images_with_labels(ored, 7)
-add_images_with_labels(ogreen, 8)
-add_images_with_labels(oblack, 9)
-add_images_with_labels(owhite, 10)
-add_images_with_labels(colorless, 11)
-
+count = 0
+for x in categories:
+    add_images_with_labels(categories[count], count)
+    count += 1
+print(len(labels))
 # Create a single numpy array with all the images we loaded
 x_train = np.array(images)
 

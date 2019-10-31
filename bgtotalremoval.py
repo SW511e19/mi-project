@@ -11,23 +11,25 @@ trainPath = "training_creature_color/"
 realTrainPath = "real_training_cards/"
 
 #Card Color Categories
-clrRed = "red/"
-clrBlue = "blue/"
-clrGreen = "green/"
-clrBlack = "black/"
-clrWhite = "white/"
-clrYellow = "yellow/"
-clrORed = "ored/"
-clrOBlue = "oblue/"
-clrOGreen = "ogreen/"
-clrOBlack = "oblack/"
-clrOWhite = "owhite/"
-clrLess = "colorless/"
+clrRed = "new_red/"
+clrBlue = "new_blue/"
+clrGreen = "new_green/"
+clrBlack = "new_black/"
+clrWhite = "new_white/"
+clrYellow = "new_yellow/"
+clrMulti = "new_multicolour/"
+clrORed = "old_red/"
+clrOBlue = "old_blue/"
+clrOGreen = "old_green/"
+clrOBlack = "old_black/"
+clrOWhite = "old_white/"
+clrOMulti = "old_multicolour/"
+clrLess = "colourless/"
 test = "test/"
 cards = "cards/"
 notcards = "not_cards/"
-#colors = [clrGreen, clrBlack, clrBlue, clrRed, clrWhite, clrOBlack, clrOBlue, clrOGreen, clrORed, clrOWhite, clrLess]
-colors = [cards, notcards]
+colors = [clrGreen, clrBlack, clrBlue, clrRed, clrWhite, clrMulti, clrOBlack, clrOBlue, clrOGreen, clrORed, clrOWhite, clrOMulti, clrLess]
+#colors = [cards, notcards]
 
 
 def bgBlackener(path):
@@ -36,7 +38,7 @@ def bgBlackener(path):
 
     # == Parameters =======================================================================
     BLUR = 21
-    CANNY_THRESH_1 = 30
+    CANNY_THRESH_1 = 28
     CANNY_THRESH_2 = 40
     MASK_DILATE_ITER = 10
     MASK_ERODE_ITER = 10
@@ -110,12 +112,18 @@ def BlackBGRemover(src, dest):
     im2.save(dest, "png")
     print(dest)
 
+def resizer(src, dest):
+    im = Image.open(src)
+    im2 = im.resize((224, 224), Image.BICUBIC)
+    im2.save(dest, "png")
+    print(dest)
 
 def fileIterator(path, color, savedest):
     location = Path(path + color)
     for img in location.glob("*.png"):
-        bgBlackener(str(img))
-        BlackBGRemover(str(img), savedest + color + img.name)
+        #bgBlackener(str(img))
+        #BlackBGRemover(str(img), savedest + color + img.name)
+        resizer(str(img), savedest + color + img.name)
 
 
 def folderIterator(path, cArray, savedest):
