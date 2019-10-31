@@ -6,7 +6,7 @@ from PIL import Image, ImageChops
 
 #Various paths
 bgPath = "bg_cards/"
-testPath = "test_creature_color/"
+testPath = "test_creature_color/tests/"
 trainPath = "training_creature_color/"
 realTrainPath = "real_training_cards/"
 
