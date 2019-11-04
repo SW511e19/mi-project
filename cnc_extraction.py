@@ -13,7 +13,7 @@ def add_images_with_labels(image_path, label_number):
         images.append(image_array)
         labels.append(formatted_card_labels[label_number])
     return
-dir_name = "test_creature_color"
+dir_name = "dataset_cnc/"
 
 # Path to folders with training data
 card = Path(dir_name) / "cards"
@@ -47,10 +47,10 @@ pretrained_nn = vgg16.VGG16(weights='imagenet', include_top=False, input_shape=(
 features_x = pretrained_nn.predict(x_train)
 
 # Save the array of extracted features to a file
-joblib.dump(features_x, "x_train.dat")
+joblib.dump(features_x, "x_train_cnc.dat")
 
 # Save the matching array of expected values to a file
-joblib.dump(y_train, "y_train.dat")
+joblib.dump(y_train, "y_train_cnc.dat")
 
 
 
