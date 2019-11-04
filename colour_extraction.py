@@ -27,14 +27,14 @@ ored = Path(dir_name) / "old_red"
 ogreen = Path(dir_name) / "old_green"
 oblack = Path(dir_name) / "old_black"
 owhite = Path(dir_name) / "old_white"
-omulti = Path(dir_name) / "old_multicolour"
+#omulti = Path(dir_name) / "old_multicolour"
 colorless = Path(dir_name) / "colourless"
 images = []
 card_labels = [
-    0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12
+    0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11
 ]
 
-categories = [blue, red, green, black, white, multi, oblue, ored, ogreen, oblack, owhite, omulti, colorless]
+categories = [blue, red, green, black, white, multi, oblue, ored, ogreen, oblack, owhite, colorless]
 formatted_card_labels = keras.utils.to_categorical(card_labels, len(card_labels))
 
 

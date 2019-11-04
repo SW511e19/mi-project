@@ -5,7 +5,7 @@ from keras.preprocessing import image
 import numpy as np
 from keras.applications import vgg16
 
-trainPath = "training/"
+trainPath = "test_creature_color/tests/"
 
 class_label_names = [
     "new_blue",

@@ -16,7 +16,7 @@ model.add(Dense(512, activation='relu'))
 model.add(Dense(512, activation='relu'))
 model.add(Dense(512, activation='relu'))
 model.add(Dropout(0.5))
-model.add(Dense(13, activation='softmax'))
+model.add(Dense(12, activation='softmax'))
 
 # Compile the model  HUSK AT
 model.compile(
