@@ -13,7 +13,7 @@ def add_images_with_labels(image_path, label_number):
         images.append(image_array)
         labels.append(formatted_card_labels[label_number])
     return
-dir_name = "test_creature_color"
+dir_name = "dataset_training"
 
 # Path to folders with training data
 blue = Path(dir_name) / "new_blue"

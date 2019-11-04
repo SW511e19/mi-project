@@ -12,9 +12,6 @@ model = Sequential()
 
 model.add(Flatten(input_shape=x_train.shape[1:]))
 model.add(Dense(512, activation='relu'))
-model.add(Dense(512, activation='relu'))
-model.add(Dense(512, activation='relu'))
-model.add(Dense(512, activation='relu'))
 model.add(Dropout(0.5))
 model.add(Dense(12, activation='softmax'))
 
