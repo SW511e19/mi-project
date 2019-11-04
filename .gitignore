@@ -115,3 +115,4 @@ venv.bak/
 .mypy_cache/
 *.jpg
 *.png
+test_creature_color.7z
