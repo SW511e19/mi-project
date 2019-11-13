@@ -28,7 +28,7 @@ class_label_names = [
 
 result_int_list = []
 
-def fileIterator(path, dir_name, dir_count, dir_list):
+def image_extractor(path, dir_name):
     dir_path = Path(path + dir_name + "/")
     image_list = []
     for img_path in dir_path.glob("*.png"):
@@ -42,20 +42,13 @@ def fileIterator(path, dir_name, dir_count, dir_list):
     # Normalize the data
     images_as_numpy_array = vgg16.preprocess_input(images_as_numpy_array)
 
-    # Load the json file that contains the model's structure
-    f = Path("model_structure.json")
-    model_structure = f.read_text()
-
-    # Recreate the Keras model object from the json data
-    model = model_from_json(model_structure)
-
-    # Re-load the model's trained weights
-    model.load_weights("model_weights.h5")
-
     # Use the pre-trained neural network to extract features from our test image (the same way we did to train the model)
     feature_extraction_model = vgg16.VGG16(weights='imagenet', include_top=False, input_shape=(224, 224, 3))
     features = feature_extraction_model.predict(images_as_numpy_array)
 
+    return features
+
+def predict(dir_count, dir_list, model, features):
     # Given the extracted features, make a final prediction using our own model
     results = model.predict(features)
     count = 0
@@ -77,28 +70,42 @@ def fileIterator(path, dir_name, dir_count, dir_list):
         class_label = class_label_names[most_likely_class_index]
         print("got " + class_label + " expected " + class_label_names[dir_count])
 
+def load_model():
+    # Load the json file that contains the model's structure
+    f = Path("model_structure.json")
+    model_structure = f.read_text()
 
-def directory_iterator(path, dir):
+    # Recreate the Keras model object from the json data
+    model = model_from_json(model_structure)
+
+    # Re-load the model's trained weights
+    model.load_weights("model_weights.h5")
+
+    return model
+
+def directory_iterator(path, dir, model):
     dir_count = 0
     for dir_name in dir:
         dir_list = []
-        fileIterator(path, dir_name, dir_count, dir_list)
+        features = image_extractor(path, dir_name)
+        predict(dir_count, dir_list, model, features)
         result_int_list.append(dir_list)
         dir_count += 1
 
+def tally():
+    correct_results = 0
+    for dir in range(len(result_int_list)):
+        for result in range(len(result_int_list[dir])):
+            correct_results += result_int_list[dir][result]
 
-directory_iterator(trainPath, class_label_names)
+    dataset_size = (12 * 5)
 
-correct_results = 0
-for dir in range(len(result_int_list)):
-    for result in range(len(result_int_list[dir])):
-        correct_results += result_int_list[dir][result]
+    correct_percentage = ((correct_results / dataset_size) * 100)
 
-dataset_size = (12 * 5)
+    print("Got " + str(correct_results) + " out of " + str(dataset_size) + ". Accuracy: " + str(correct_percentage))
 
-correct_percentage = ((correct_results / dataset_size) * 100)
-
-print("Got " + str(correct_results) + " out of " + str(dataset_size) + ". Accuracy: " + str(correct_percentage))
+directory_iterator(trainPath, class_label_names, load_model())
+tally()
 
 
 
