@@ -13,14 +13,19 @@ def add_images_with_labels(image_path, label_number):
         images.append(image_array)
         labels.append(formatted_card_labels[label_number])
     return
-dir_name = "dataset_training"
+dir_name = "test_creature_color"
 
 # Path to folders with training data
-blue = Path(dir_name) / "new_blue"
-red = Path(dir_name) / "new_red"
-green = Path(dir_name) / "new_green"
-black = Path(dir_name) / "new_black"
-white = Path(dir_name) / "new_white"
+#blue = Path(dir_name) / "new_blue"
+blue = Path(dir_name) / "blue"
+#red = Path(dir_name) / "new_red"
+red = Path(dir_name) / "red"
+#green = Path(dir_name) / "new_green"
+green = Path(dir_name) / "green"
+#black = Path(dir_name) / "new_black"
+black = Path(dir_name) / "black"
+#white = Path(dir_name) / "new_white"
+white = Path(dir_name) / "white"
 multi = Path(dir_name) / "new_multicolour"
 oblue = Path(dir_name) / "old_blue"
 ored = Path(dir_name) / "old_red"
@@ -31,10 +36,10 @@ owhite = Path(dir_name) / "old_white"
 colorless = Path(dir_name) / "colourless"
 images = []
 card_labels = [
-    0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11
+    0, 1, 2, 3, 4, 5, 6
 ]
 
-categories = [blue, red, green, black, white, multi, oblue, ored, ogreen, oblack, owhite, colorless]
+categories = [blue, red, green, black, white, multi, colorless]
 formatted_card_labels = keras.utils.to_categorical(card_labels, len(card_labels))
 
 
