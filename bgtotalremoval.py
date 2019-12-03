@@ -9,6 +9,11 @@ bgPath = "bg_cards/"
 testPath = "test_creature_color/tests/"
 trainPath = "training_creature_color/"
 realTrainPath = "real_training_cards/"
+cncnc = "cnc/"
+cncPath = "cnc/"
+badcncpath = "badcnc/"
+
+cnc = [cncPath, badcncpath]
 
 #Card Color Categories
 clrRed = "new_red/"
@@ -113,10 +118,10 @@ def BlackBGRemover(src, dest):
     print(dest)
 
 def resizer(src, dest):
+    print(src)
     im = Image.open(src)
     im2 = im.resize((224, 224), Image.BICUBIC)
     im2.save(dest, "png")
-    print(dest)
 
 def fileIterator(path, color, savedest):
     location = Path(path + color)
@@ -131,4 +136,4 @@ def folderIterator(path, cArray, savedest):
         fileIterator(path, x, savedest)
 
 
-folderIterator(testPath, colors, testPath)
+folderIterator(cncnc, cnc, cncnc)

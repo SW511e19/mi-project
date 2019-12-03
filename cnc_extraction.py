@@ -6,31 +6,37 @@ from keras.preprocessing import image
 from keras.applications import vgg16
 
 def add_images_with_labels(image_path, label_number):
+    count = 0
     for img in image_path.glob("*.png"):
         img = image.load_img(img)
+        print()
         image_array = image.img_to_array(img)
-
+        count += 1
+        print(count)
         images.append(image_array)
         labels.append(formatted_card_labels[label_number])
     return
-dir_name = "dataset_cnc/"
+dir_name = "cnc"
 
 # Path to folders with training data
-card = Path(dir_name) / "cards"
-nocard = Path(dir_name) / "not_cards"
+nocard = Path(dir_name) / "badcnc"
+card = Path(dir_name) / "cnc"
+
 images = []
 card_labels = [
     0, 1
 ]
 
-formatted_card_labels = keras.utils.to_categorical(card_labels, 2)
-print(formatted_card_labels)
+categories = [nocard, card]
+formatted_card_labels = keras.utils.to_categorical(card_labels, len(card_labels))
 
 
 labels = []
-add_images_with_labels(card, 0)
-add_images_with_labels(nocard, 1)
-
+count = 0
+for x in categories:
+    add_images_with_labels(categories[count], count)
+    count += 1
+print(len(labels))
 # Create a single numpy array with all the images we loaded
 x_train = np.array(images)
 
@@ -47,10 +53,10 @@ pretrained_nn = vgg16.VGG16(weights='imagenet', include_top=False, input_shape=(
 features_x = pretrained_nn.predict(x_train)
 
 # Save the array of extracted features to a file
-joblib.dump(features_x, "x_train_cnc.dat")
+joblib.dump(features_x, "x_train.dat")
 
 # Save the matching array of expected values to a file
-joblib.dump(y_train, "y_train_cnc.dat")
+joblib.dump(y_train, "y_train.dat")
 
 
 

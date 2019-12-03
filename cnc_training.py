@@ -26,7 +26,7 @@ model.compile(
 model.fit(
     x_train,
     y_train,
-    epochs=20,
+    epochs=50,
     shuffle=True
 )
 
