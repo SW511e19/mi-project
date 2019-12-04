@@ -17,12 +17,6 @@ class_label_names = [
     "black",
     "white",
     "new_multicolour",
-    #"old_blue",
-    #"old_red",
-    #"old_green",
-    #"old_black",
-    #"old_white",
-    #    "old_multicolour",
     "colourless"
 ]
 

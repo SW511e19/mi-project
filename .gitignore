@@ -116,3 +116,4 @@ venv.bak/
 *.jpg
 *.png
 test_creature_color.7z
+*.zip

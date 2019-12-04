@@ -15,6 +15,17 @@ badcncpath = "badcnc/"
 
 cnc = [cncPath, badcncpath]
 
+clr = "clr_cards/"
+black = "black/"
+blue = "blue/"
+clrless = "clrless/"
+green = "green/"
+multi = "multi/"
+red = "red/"
+white = "white/"
+clrs = [black, blue, clrless, green, multi, red, white]
+
+
 #Card Color Categories
 clrRed = "new_red/"
 clrBlue = "new_blue/"
@@ -136,4 +147,4 @@ def folderIterator(path, cArray, savedest):
         fileIterator(path, x, savedest)
 
 
-folderIterator(cncnc, cnc, cncnc)
+folderIterator(clr, clrs, clr)

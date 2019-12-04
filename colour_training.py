@@ -9,39 +9,10 @@ y_train = joblib.load("y_train.dat")
 
 # Create a model and add layers
 model = Sequential()
-dropout = 0.05
+dropout = 0.1
 model.add(Flatten(input_shape=x_train.shape[1:]))
 model.add(Dense(512, activation='relu'))
 model.add(Dropout(dropout))
-model.add(Dense(512, activation='relu'))
-model.add(Dropout(dropout))
-model.add(Dense(512, activation='relu'))
-model.add(Dropout(dropout))
-model.add(Dense(512, activation='relu'))
-model.add(Dropout(dropout))
-model.add(Dense(512, activation='relu'))
-model.add(Dropout(dropout))
-model.add(Dense(512, activation='relu'))
-model.add(Dropout(dropout))
-model.add(Dense(512, activation='relu'))
-model.add(Dropout(dropout))
-model.add(Dense(512, activation='relu'))
-model.add(Dropout(dropout))
-model.add(Dense(512, activation='relu'))
-model.add(Dropout(dropout))
-model.add(Dense(512, activation='relu'))
-model.add(Dropout(dropout))
-model.add(Dense(512, activation='relu'))
-model.add(Dropout(dropout))
-model.add(Dense(512, activation='relu'))
-model.add(Dropout(dropout))
-model.add(Dense(512, activation='relu'))
-model.add(Dropout(dropout))
-model.add(Dense(512, activation='relu'))
-model.add(Dropout(dropout))
-model.add(Dense(512, activation='relu'))
-model.add(Dropout(dropout))
-
 model.add(Dense(7, activation='softmax'))
 
 # Compile the model  HUSK AT
@@ -55,7 +26,7 @@ model.compile(
 model.fit(
     x_train,
     y_train,
-    epochs=500,
+    epochs=50,
     shuffle=True
     #class_weight=[[0, 1], [1, 1], [2, 1], [3, 1], [4, 1], [5, 2], [6, 2]]
 )
