@@ -5,8 +5,8 @@ import numpy as np
 from keras.applications import vgg16
 
 class_label_names = [
-    "cards",
-    "not_cards"
+    "badcnc",
+    "cnc"
 ]
 
 # Load the json file that contains the model's structure
@@ -20,7 +20,7 @@ model = model_from_json(model_structure)
 model.load_weights("model_weights_cnc.h5")
 
 # Load an image file to test, resizing it to 64x64 pixels (as required by this model)
-img = image.load_img("empty_background.png", target_size=(224, 224))
+img = image.load_img("cnc/badcnc/bong.png", target_size=(224, 224))
 #img = image.load_img("green.png", target_size=(224, 224))
 # Convert the image to a numpy array
 image_array = image.img_to_array(img)
